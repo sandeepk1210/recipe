@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+           http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/jdbc    http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+           http://www.springframework.org/schema/mvc     http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+           http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/util    http://www.springframework.org/schema/util/spring-util-3.1.xsd
+       ">
+
+	<mvc:annotation-driven />
+	<context:annotation-config />
+	<context:component-scan base-package="com.sandeep.recipe" />
+
+	<!-- Menu list for Configuration menu -->
+	<util:list id="configurationMenuList" value-type="java.lang.String">
+		<value>Cuisine</value>
+		<value>Person</value>
+		<!-- <value>Ingredients</value> -->
+	</util:list>
+
+	<!-- Configure property files -->
+	<context:property-placeholder
+		location="classpath:spring/jdbc.properties, classpath:spring/business-config.properties"
+		ignore-resource-not-found="true" local-override="false"
+		ignore-unresolvable="false" />
+
+	<!--Configuration to connect to Oracle -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${dev.jdbc.driverClassName}" />
+		<property name="url" value="${dev.jdbc.url}" />
+		<property name="username" value="${dev.jdbc.username}" />
+		<property name="password" value="${dev.jdbc.password}" />
+		<property name="initialSize" value="${dev.jdbc.initialSize}" />
+		<property name="maxActive" value="${dev.jdbc.maxActive}" />
+	</bean>
+
+	<!-- Hibernate Session Factory Configuration -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.sandeep.recipe" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${dev.jdbc.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+		<!-- Mocking -->
+	<bean id="configServices" name="configServices" class="org.mockito.Mockito"
+		factory-method="mock">
+		<constructor-arg value="com.sandeep.recipe.service.ConfigServices" />
+	</bean>	
+	
+</beans>

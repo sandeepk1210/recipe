@@ -1,0 +1,77 @@
+/* Validation - Not read yet */
+http://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-adding-validation-to-a-rest-api/
+
+http://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
+
+/*** For counting the object length */
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+	<c:choose>
+		<c:when test="${fn:length(recipes) eq 0 }">
+			<p>No record found</p>
+		</c:when>
+	<c:choose>
+
+/*** Java script code - On click call a function to validate text box is empty or not */
+<script type="text/javascript">
+	function searchRecipe() {
+		var txtSearch = document.getElementById("txtSearch");
+		var str = txtSearch.value; //.trim();
+
+		if (str != "") {
+			window.location = "" + str;
+		} else { /* To check if non-String value is inputted */
+			txtSearch.value = "";
+			txtSearch.focus();
+			alert("Null or invalid value inputted");
+		}
+	}
+	
+	function addRecipe(){
+		window.location = "add";
+	}
+</script>
+
+/*** Delete verb */
+<c:forEach items="${cuisineList}" var="cuisine">
+	<sf:form method="DELETE">
+		<input type="hidden" value="${cuisine.id}" id ="id" name="id">
+		<input type="submit" value="Delete" onClick="return confirm('Are you sure you want to delete?')">
+	</sf:form>
+</c:forEach>
+
+@RequestMapping(value="cuisine", method=RequestMethod.DELETE)
+public String deleteCuisine(@RequestParam int id, Map<String, Object> map){
+	logger.info("Config-Delete method for Cuisine");
+	configServices.deleteCuisine(id);
+}
+
+/*** selecting data by lower(column) = lower(value) */
+public List<Recipe> getRecipesByName(String name) {
+		String txt = "%" + name + "%";
+
+		@SuppressWarnings("deprecation")
+		List<Recipe> recipes = getSession()
+				.createCriteria(Recipe.class)
+				.add(Restrictions.sqlRestriction(
+						"lower({alias}.name) like lower(?)", txt,
+						Hibernate.STRING)).list();
+
+		return recipes;
+	}
+	
+/*** When moved to Spring version 3.2.4.RELEASE, getting weird spring-asm IncompatibleClassChangeError errors 
+java.lang.IncompatibleClassChangeError: 
+class org.springframework.core.type.classreading.ClassMetadataReadingVisitor 
+has interface org.springframework.asm.ClassVisitor as super class
+*/
+Referred to http://www.mkyong.com/mongodb/spring-asm-dependency-issue-in-spring-data/ for solution.
+Step1 : Checked mvn dependency:tree
+I have commented asm in POM.XML but still spring-test was referring to spring-asm
+ 
+[INFO] +- org.springframework:spring-test-mvc:jar:1.0.0.M1:test
+[INFO] |  +- org.springframework:spring-context:jar:3.1.1.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-asm:jar:3.1.1.RELEASE:compile
+[INFO] |  \- org.hamcrest:hamcrest-library:jar:1.2.1:test
+
+Step 2: As suggested by mkyong, moved spring-test at the bottom and rechecked mvn dependency:tree. This fixed the issue. 

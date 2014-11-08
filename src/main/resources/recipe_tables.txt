@@ -1,0 +1,78 @@
+select * from cuisine order by 1;
+select * from person order by 1;
+select * from recipe order by 1;
+select * from ingredients order by 1;
+
+drop table recipe;
+drop table cuisine;
+drop table person;
+drop table ingredients;
+
+--Create table
+create table cuisine(cuisine_id number(3) primary key,
+                     name varchar2(40));
+insert into cuisine (cuisine_id, name) values (1, 'Indian');
+insert into cuisine (cuisine_id, name) values (2, 'Italian');
+insert into cuisine (cuisine_id, name) values (3, 'Punjabi');
+insert into cuisine (cuisine_id, name) values (4, 'Mallu');
+
+--Create table
+create table person(person_id number(3) primary key, name varchar2(40),
+                     selected number(1) default 0 check (selected in (0, 1)));
+insert into person (person_id, name, selected) values (50, 'Rhea', 0);
+insert into person (person_id, name, selected) values (51, 'Mummy', 0);
+insert into person (person_id, name, selected) values (52, 'Papa', 0);
+insert into person (person_id, name, selected) values (53, 'All', 1);
+
+--Create table
+create table recipe(id number primary key,
+                    name varchar2(25) unique,
+                    ingredients varchar2(500) not null,
+                    method varchar2(500),
+                    tips varchar2(500),
+                    cuisine_id number,
+                    writeup varchar2(200),
+                    person_id number,
+                    source varchar2(10),
+                    constraint cuisine_fk foreign key(cuisine_id)
+                    references cuisine(cuisine_id),
+                    constraint person_fk foreign key(person_id) references
+                    person(person_id));
+
+insert into recipe
+  (ID,
+   NAME,
+   INGREDIENTS,
+   METHOD,
+   TIPS,
+   CUISINE_ID,
+   WRITEUP,
+   PERSON_ID,
+   SOURCE)
+values
+  (101,
+   'Kali Dal',
+   'Pyaar',
+   'Cooking',
+   'Ask SK',
+   1,
+   'Kali dal is best',
+   50,
+   'SK');
+
+--Create table
+create table INGREDIENTS(INGREDIENT_ID NUMBER not null primary key,
+                         TYPE VARCHAR2(20) not null,
+                         QUANTITY VARCHAR2(30) not null);
+
+insert into ingredients
+  (INGREDIENT_ID, TYPE, QUANTITY)
+values
+  (1, 'Salt', 'As per taste');
+
+insert into ingredients
+  (INGREDIENT_ID, TYPE, QUANTITY)
+values
+  (2, 'Tumeric', 'Pinch');
+  
+commit;

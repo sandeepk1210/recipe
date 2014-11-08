@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC  
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<!-- Main template that display the Header contains links like Home, Configure, Tools etc -->
+	<definition name="template" template="/WEB-INF/jsp/main_template.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/home_header.jsp" />
+	</definition>
+
+	<!-- Recipe template that has LIST of recipes on the left pane -->
+	<definition name="template_recipe" extends="template">
+		<put-attribute name="list"
+			value="/WEB-INF/jsp/recipe/recipes_list.jsp" />
+	</definition>
+
+	<!-- Display single recipe (which is selected from left pane) on right pane -->
+	<definition name="recipes/recipe" extends="template_recipe">
+		<put-attribute name="title" value="Recipe" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/recipe/recipes_display.jsp" />
+	</definition>
+
+	<!-- New recipe form -->
+	<definition name="recipes/new" extends="template_recipe">
+		<put-attribute name="title" value="Create New Recipe" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/recipe/recipes_new.jsp" />
+	</definition>
+	
+		<!-- Modify recipe form -->
+	<definition name="recipes/modify" extends="template_recipe">
+		<put-attribute name="title" value="Modify Recipe" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/recipe/recipes_modify.jsp" />
+	</definition>
+
+	<!-- Configuration menu that will be displayed on left pane -->
+	<definition name="template_config" extends="template">
+		<put-attribute name="list"
+			value="/WEB-INF/jsp/config/config_menu.jsp" />
+	</definition>
+
+	<!-- Configuration of Cuisine -->
+	<definition name="config/cuisine" extends="template_config">
+		<put-attribute name="title" value="Configuration - Cuisine" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/config/config_cuisine.jsp" />
+	</definition>
+
+	<!-- Configuration of Person -->
+	<definition name="config/person" extends="template_config">
+		<put-attribute name="title" value="Configuration - Person" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/config/config_person.jsp" />
+	</definition>
+
+	<!-- Configuration of Ingredient -->
+	<definition name="config/ingredient" extends="template_config">
+		<put-attribute name="title" value="Configuration - Ingredients" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/config/config_ingredient.jsp" />
+	</definition>
+	
+	<definition name="errors/knownerrors" extends="template">
+		<put-attribute name="title">Error - Recipe</put-attribute>
+		<put-attribute name="list" value="" />
+		<put-attribute name="content" value="/WEB-INF/jsp/errors/knownerrorspage.jsp" />
+	</definition>
+	
+	<definition name="errors/defaultpage" extends="template">
+		<put-attribute name="title">Error - Recipe</put-attribute>
+		<put-attribute name="list" value="" />
+		<put-attribute name="content" value="/WEB-INF/jsp/errors/defaulterrorpage.jsp" />
+	</definition>
+</tiles-definitions>

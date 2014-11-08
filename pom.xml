@@ -1,0 +1,252 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>Recipe</groupId>
+	<artifactId>Recipe</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Recipe Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<!-- Spring framework release versions -->
+	<properties>
+		<spring.version>3.2.4.RELEASE</spring.version>
+		<springtest.version>3.2.4.RELEASE</springtest.version>
+		<aspectj.version>1.7.4</aspectj.version>
+		<servlet.version>2.5</servlet.version>
+		<jstl.version>1.2</jstl.version>
+		<log4j.version>1.2.14</log4j.version>
+		<junit.version>4.11</junit.version>
+		<tiles.version>2.2.2</tiles.version>
+		<hibernate.version>4.3.1.Final</hibernate.version>
+	</properties>
+
+	<!-- JBoss repository for Hibernate -->
+	<repositories>
+		<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- Add dependencies from here -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+
+		<!-- Spring Framework JARs -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<!-- Start Spring AOP -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<!-- JSTL -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+
+		<!-- Start Tiles JARs -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-template</artifactId>
+			<version>${tiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>${tiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>${tiles.version}</version>
+		</dependency>
+		<!-- End Tiles JARs -->
+
+		<!-- Start - Oracle JARs -->
+		<!-- Oracle Jar, this has been installed using following command -->
+		<!-- mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14 -->
+		<!-- -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=ojdbc14.jar -DgeneratePom=true -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+		<!-- End - Oracle JARs -->
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.6.3.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Hibernate Validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<!-- End Hibernate -->
+
+		<!-- Common jars -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<!-- End Common jars -->
+
+		<!-- Testing Jars -->
+		<!-- Jaskson 2.2.1 is used to transform objects into url encoded String 
+			objects. -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.2.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.2.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Hamcrest 1.3 is used when writing assesrtions for the reponses. -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.9.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${springtest.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- spring-test-mvc is required to test Spring MVC if Spring Framework 
+			3.1.x is used -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-test-mvc</artifactId> 
+			<version>1.0.0.M1</version> <scope>test</scope> </dependency> -->
+		<!-- End Testing JARS -->
+	</dependencies>
+
+	<build>
+		<finalName>Recipe</finalName>
+	</build>
+
+	<!-- Start Spring AOP -->
+	<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-asm</artifactId> 
+		<version>3.1.1.RELEASE</version> </dependency> <dependency> <groupId>aopalliance</groupId> 
+		<artifactId>aopalliance</artifactId> <version>1.0</version> </dependency> 
+		<dependency> <groupId>org.aspectj</groupId> <artifactId>aspectjrt</artifactId> 
+		<version>1.6.11</version> </dependency> <dependency> <groupId>org.aspectj</groupId> 
+		<artifactId>aspectjweaver</artifactId> <version>1.6.11</version> </dependency> -->
+	<!-- End Spring AOP -->
+
+	<!-- Spring Framework JARs -->
+	<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-expression</artifactId> 
+		<version>${spring.version}</version> </dependency> -->
+	<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-beans</artifactId> 
+		<version>${spring.version}</version> </dependency> <dependency> <groupId>org.springframework</groupId> 
+		<artifactId>spring-context</artifactId> <version>${spring.version}</version> 
+		</dependency> -->
+
+	<!-- Spring Security -->
+	<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-core</artifactId> 
+		<version>${spring-security.version}</version> </dependency> <dependency> 
+		<groupId>org.springframework.security</groupId> <artifactId>spring-security-web</artifactId> 
+		<version>${spring-security.version}</version> </dependency> <dependency> 
+		<groupId>org.springframework.security</groupId> <artifactId>spring-security-config</artifactId> 
+		<version>${spring-security.version}</version> </dependency> <dependency> 
+		<groupId>org.springframework.security</groupId> <artifactId>spring-security-taglibs</artifactId> 
+		<version>${spring-security.version}</version> </dependency> -->
+	<!-- End Spring Security -->
+
+	<!-- Common JARs -->
+	<!-- <dependency> <groupId>commons-pool</groupId> <artifactId>commons-pool</artifactId> 
+		<version>1.6</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
+		<artifactId>commons-logging</artifactId> <version>1.1.1</version> </dependency> -->
+
+	<!-- JSON Jars -->
+	<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
+		<version>2.3.0</version> </dependency> -->
+
+</project>
